@@ -1,0 +1,23 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { RolEntity } from './entity/rol.entity';
+import { Repository } from 'typeorm';
+import { CreateRolDto } from './dto/create-rol.dto';
+
+@Injectable()
+export class RolService {
+
+    constructor(
+        @InjectRepository(RolEntity)
+        private readonly rolRepository: Repository<RolEntity>,
+    ) {}
+
+    async create(CreateRolDto: CreateRolDto): Promise<string> {
+        const rol = this.rolRepository.create(CreateRolDto);
+        await this.rolRepository.save(rol);
+
+        return  'Rol creado exitosamente';
+
+    }
+}
+
